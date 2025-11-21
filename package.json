@@ -23,5 +23,5 @@
   "devDependencies": {
     "nodemon": "^3.1.11"
   },
-  "type" : "moudle"
+  "type" : "module"
 }
