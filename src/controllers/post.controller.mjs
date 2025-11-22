@@ -5,10 +5,6 @@ export class postController {
 
     static async createPost(req,res,next){
 
-
-
-  
-
         try {
             
             const {title,content,image_url} = req.body;
@@ -71,6 +67,35 @@ export class postController {
 
       if (!post) {
       return res.status(404).json({ error: 'Post not found' });
+      }
+
+        res.status(201).json(post);
+
+        } catch (error) {
+         console.error('Registration error:', error);
+
+         const errorMessage = process.env.NODE_ENV === 'production' 
+          ? 'Internal server error' 
+          : error.message;
+
+         return res.status(500).json({ 
+     success: false,
+      error: errorMessage 
+      });
+   
+        }
+
+    }
+    static async getAllPostsByUser(req,res,next){
+
+        try {
+            
+             const userId = req.user.userId;
+
+            const post = await PostModel.getPostsByUsers(userId);
+
+      if (!post) {
+      return res.status(404).json({ error: 'Posts not found' });
       }
 
         res.status(201).json(post);
@@ -155,7 +180,7 @@ export class postController {
 
     }
 
-
+    
 
 }
 

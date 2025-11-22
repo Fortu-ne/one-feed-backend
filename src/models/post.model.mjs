@@ -30,6 +30,14 @@ export class PostModel  {
        return result.rows;
 
     }
+    static async getPostsByUsers(id){
+
+        
+       const result = await pool.query(`SELECT * FROM posts WHERE user_id = $1`,id);
+
+       return result.rows;
+
+    }
     static async getPost(title,content){
 
        const result = await pool.query(`SELECT * FROM posts WHERE title = $1 AND content =$2`,[title,content]);
