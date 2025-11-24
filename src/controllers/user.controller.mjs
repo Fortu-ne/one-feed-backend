@@ -19,8 +19,9 @@ export class UserController {
 
      static async getById(req, res, next) {
         try {
-            const { id } = req.params;
-            const user = await UserModel.getUserById(id);
+            
+            const userId = req.user.userId;
+            const user = await UserModel.getUserById(userId);
 
             if (!user) {
                 return res.status(404).json({

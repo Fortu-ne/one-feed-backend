@@ -4,10 +4,10 @@ export class PostModel  {
 
     static async createPost(post,userId){
 
-        const {title, content, image_url} = post;
+        const { content, image_url} = post;
     const result = await pool.query(
-      `INSERT INTO posts (user_id, title, content, image_url) VALUES ($1, $2, $3, $4) RETURNING *`,
-      [userId, title, content, image_url]
+      `INSERT INTO posts (user_id, content, image_url) VALUES ($1, $2, $3) RETURNING *`,
+      [userId, content, image_url]
     );
 
     return result.rows[0];
@@ -30,17 +30,17 @@ export class PostModel  {
        return result.rows;
 
     }
-    static async getPostsByUsers(id){
+    static async getPostsByUser(id){
 
         
-       const result = await pool.query(`SELECT * FROM posts WHERE user_id = $1`,id);
+       const result = await pool.query(`SELECT * FROM users WHERE id = $1`,[id]);
 
-       return result.rows;
+       return result.rows[0];
 
     }
-    static async getPost(title,content){
+    static async getPost(content){
 
-       const result = await pool.query(`SELECT * FROM posts WHERE title = $1 AND content =$2`,[title,content]);
+       const result = await pool.query(`SELECT * FROM posts WHERE content =$1`,[content]);
 
        return result.rows[0];
     
