@@ -91,10 +91,10 @@ profileRouter.get('/me', authenticateToken, async (req, res) => {
 });
 
 
-profileRouter.get('/profile', authenticateToken, async (req, res) => {
+profileRouter.get('/profile/:id', authenticateToken, async (req, res) => {
   try {
    
-    const userId = req.user.userId;
+    const userId = req.params;
 
     const result = await pool.query(`
       SELECT 
